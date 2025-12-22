@@ -1,0 +1,9 @@
+requests
+Flask==3.1.0
+gunicorn
+google-genai
+python-dotenv
+pandas
+openpyxl
+pymupdf
+regex
