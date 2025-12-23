@@ -17,7 +17,6 @@ app = Flask(__name__)
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 REF_DIR = os.path.join(BASE_DIR, "reference_docs")
@@ -118,16 +117,37 @@ def results(run_id):
 
 
 
+# @app.route("/download/pdf/<run_id>")
+# def download_pdf(run_id):
+#     file_path = os.path.join(OUTPUT_DIR, f"audit_{run_id}.pdf")
+#     return send_file(file_path, as_attachment=False)
+
 @app.route("/download/pdf/<run_id>")
 def download_pdf(run_id):
-    file_path = os.path.join(OUTPUT_DIR, f"audit_{run_id}.pdf")
-    return send_file(file_path, as_attachment=False)
+    if run_id not in RUNS or "output_pdf" not in RUNS[run_id]:
+        return "File not ready", 404
 
+    return send_file(
+        RUNS[run_id]["output_pdf"],
+        as_attachment=True,
+        download_name=f"audit_{run_id}.pdf")
 
 @app.route("/download/excel/<run_id>")
 def download_excel(run_id):
-    file_path = os.path.join(OUTPUT_DIR, f"audit_{run_id}.xlsx")
-    return send_file(file_path, as_attachment=False)
+    if run_id not in RUNS or "output_excel" not in RUNS[run_id]:
+        return "File not ready", 404
+
+    return send_file(
+        RUNS[run_id]["output_excel"],
+        as_attachment=True,
+        download_name=f"audit_{run_id}.xlsx"
+    )
+
+
+# @app.route("/download/excel/<run_id>")
+# def download_excel(run_id):
+#     file_path = os.path.join(OUTPUT_DIR, f"audit_{run_id}.xlsx")
+#     return send_file(file_path, as_attachment=False)
 
 
 if __name__ == "__main__":

@@ -1,1 +1,5 @@
 .env
+outputs/
+uploads/
+__pycache__/
+*.py[cod]
