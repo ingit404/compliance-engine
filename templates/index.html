@@ -20,7 +20,6 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             background-color: #f8fafc;
-            /* Base background pattern and subtle gradients */
             background-image: 
                 radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.05) 0px, transparent 50%),
                 url("https://www.transparenttextures.com/patterns/cubes.png");
@@ -30,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* THE TOP-LEFT GLOW EFFECT */
         body::before {
             content: "";
             position: fixed;
@@ -50,7 +48,7 @@
             margin: 0 auto; 
             padding: 60px 20px; 
             position: relative; 
-            z-index: 1; /* Sits above the glow */
+            z-index: 1; 
         }
 
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
@@ -63,7 +61,7 @@
 
         .section {
             background: var(--glass-bg); 
-            backdrop-filter: blur(12px); /* Frosted glass effect */
+            backdrop-filter: blur(12px);
             border-radius: 20px; 
             box-shadow: var(--card-shadow);
             padding: 40px; 
@@ -71,7 +69,27 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
-        /* ===== SKELETON LOADER STYLES ===== */
+        /* PROGRESS BAR STYLES */
+        .progress-container {
+            margin-top: 20px;
+        }
+        
+        .progress-track {
+            background: #e2e8f0; 
+            height: 12px; 
+            border-radius: 10px; 
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .progress-fill {
+            height: 100%; 
+            width: 0%; 
+            background: linear-gradient(90deg, #ff7a00, #ffb800);
+            transition: width 0.4s ease;
+        }
+
+        /* SKELETON LOADER */
         .skeleton-wrapper {
             display: none;
             flex-direction: column; gap: 20px; padding: 20px 0;
@@ -97,7 +115,7 @@
             100% { transform: translateX(100%); }
         }
 
-        /* ===== BUTTONS & INPUTS ===== */
+        /* BUTTONS & INPUTS */
         #pdfInput {
             width: 100%; padding: 50px 20px; border: 2px dashed #cbd5e1;
             border-radius: 12px; text-align: center; cursor: pointer; box-sizing: border-box;
@@ -118,11 +136,6 @@
         }
         .btn-primary:hover:not(:disabled) { transform: translateY(-2px); background: #0f172a; }
         .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-        #progressBar {
-            height: 10px; background: var(--primary); width: 0%;
-            transition: width 0.4s ease; border-radius: 10px;
-        }
 
         #resultsSection { border-left: 6px solid #10b981; background: #f0fdf4; }
         .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
@@ -145,9 +158,10 @@
     <div class="section">
         <div style="font-weight:700; margin-bottom:15px;">📄 UPLOAD LOAN DOCUMENT</div>
         <input type="file" id="pdfInput" accept="application/pdf">
-        <div id="uploadProgress" style="display:none; margin-top:20px;">
-            <div style="background:#e2e8f0; height:10px; border-radius:10px; overflow:hidden;">
-                <div id="progressBar"></div>
+        
+        <div id="uploadProgress" class="progress-container" style="display:none;">
+            <div class="progress-track">
+                <div id="progressBar" class="progress-fill"></div>
             </div>
             <p id="progressText" style="font-size:12px; font-weight:800; color:var(--primary); text-align:right; margin-top:5px;">0%</p>
         </div>
@@ -160,6 +174,16 @@
 
     <div class="actions">
         <button id="runAuditBtn" class="btn btn-primary" disabled>Start Audit Engine</button>
+        
+        <div id="auditProgressContainer" class="progress-container" style="display:none; margin-bottom: 30px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span id="auditStatusText" style="font-size: 13px; font-weight: 700; color: var(--text-main);">INITIALIZING ENGINE...</span>
+                <span id="auditPercentText" style="font-size: 13px; font-weight: 800; color: var(--primary);">0%</span>
+            </div>
+            <div class="progress-track" style="height: 16px;">
+                <div id="auditProgressBar" class="progress-fill"></div>
+            </div>
+        </div>
     </div>
 
     <div id="skeletonLoader" class="section skeleton-wrapper">
@@ -185,7 +209,7 @@
 <script>
     let runId = null;
 
-    // Upload logic
+    // --- UPLOAD LOGIC ---
     document.getElementById("pdfInput").addEventListener("change", function () {
         const file = this.files[0];
         if (!file) return;
@@ -214,29 +238,68 @@
         xhr.send(formData);
     });
 
-    // Audit logic
+    // --- AUDIT ENGINE LOGIC ---
     document.getElementById("runAuditBtn").addEventListener("click", function () {
         if (!runId) return;
         
-        // UI Transition to Skeleton
-        this.style.display = "none";
+        const btn = this;
+        const auditProgress = document.getElementById("auditProgressContainer");
+        const auditBar = document.getElementById("auditProgressBar");
+        const statusText = document.getElementById("auditStatusText");
+        const percentText = document.getElementById("auditPercentText");
+
+        // 1. UI Switch
+        btn.style.display = "none";
+        auditProgress.style.display = "block";
         document.getElementById("skeletonLoader").style.display = "flex";
         document.getElementById("resultsSection").style.display = "none";
 
+        // 2. Start Simulated Progress Sequence
+        let progress = 0;
+        const stages = [
+            { upTo: 25, text: "🔍 EXTRACTING DOCUMENT DATA..." },
+            { upTo: 55, text: "⚖️ ANALYZING REGULATORY COMPLIANCE..." },
+            { upTo: 85, text: "📝 FINALIZING AUDIT REPORT..." }
+        ];
+
+        const timer = setInterval(() => {
+            if (progress < 92) { // Hold at 92% until server responds
+                progress += (progress < 40) ? 1 : 0.5;
+                const displayProgress = Math.floor(progress);
+                auditBar.style.width = displayProgress + "%";
+                percentText.innerText = displayProgress + "%";
+                
+                const currentStage = stages.find(s => displayProgress <= s.upTo);
+                if (currentStage) statusText.innerText = currentStage.text;
+            }
+        }, 150);
+
+        // 3. API Call
         fetch(`/run-audit/${runId}`, { method: "POST" })
             .then(res => res.ok ? res : Promise.reject())
             .then(() => {
-                // Hide skeleton, show results
-                document.getElementById("skeletonLoader").style.display = "none";
-                document.getElementById("downloadPdfBtn").href = `/download/pdf/${runId}`;
-                document.getElementById("downloadExcelBtn").href = `/download/excel/${runId}`;
-                document.getElementById("resultsSection").style.display = "block";
-                document.getElementById("resultsSection").scrollIntoView({ behavior: 'smooth' });
+                clearInterval(timer);
+                
+                // Finalize Progress Bar
+                auditBar.style.width = "100%";
+                percentText.innerText = "100%";
+                statusText.innerText = "✅ ANALYSIS COMPLETE";
+
+                setTimeout(() => {
+                    document.getElementById("skeletonLoader").style.display = "none";
+                    document.getElementById("downloadPdfBtn").href = `/download/pdf/${runId}`;
+                    document.getElementById("downloadExcelBtn").href = `/download/excel/${runId}`;
+                    document.getElementById("resultsSection").style.display = "block";
+                    document.getElementById("resultsSection").scrollIntoView({ behavior: 'smooth' });
+                    auditProgress.style.display = "none"; // Cleanup bar
+                }, 600);
             })
             .catch(() => {
-                alert("Error during audit.");
+                clearInterval(timer);
+                alert("Error during audit execution. Please try again.");
+                btn.style.display = "block";
+                auditProgress.style.display = "none";
                 document.getElementById("skeletonLoader").style.display = "none";
-                this.style.display = "block";
             });
     });
 </script>
