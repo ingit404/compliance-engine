@@ -11,7 +11,7 @@
             --primary: #ff8000ff;
             --primary-glow: rgba(255, 122, 0, 0.2);
             --text-main: #1e293b;
-            --text-sub: #5d7290;
+            --text-sub: #64748b;
             --glass-bg: rgba(255, 255, 255, 0.85);
             --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
@@ -20,7 +20,7 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             background-color: #f8fafc;
-            background-image: 
+            background-image:
                 radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.05) 0px, transparent 50%),
                 url("https://www.transparenttextures.com/patterns/cubes.png");
             min-height: 100vh;
@@ -43,54 +43,81 @@
             pointer-events: none;
         }
 
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 60px 20px; 
-            position: relative; 
-            z-index: 1; 
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
-        
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
         h1 {
-            margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em;
+            margin: 0;
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             background: linear-gradient(90deg, #ff7a00, #ffb800);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .section {
-            background: var(--glass-bg); 
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
-            border-radius: 20px; 
+            border-radius: 20px;
             box-shadow: var(--card-shadow);
-            padding: 40px; 
-            margin-bottom: 30px; 
+            padding: 40px;
+            margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
         .progress-container { margin-top: 20px; }
+
         .progress-track {
-            background: #e2e8f0; height: 12px; border-radius: 10px;
-            overflow: hidden; border: 1px solid #cbd5e1;
+            background: #e2e8f0;
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
         }
+
         .progress-fill {
-            height: 100%; width: 0%;
+            height: 100%;
+            width: 0%;
             background: linear-gradient(90deg, #ff7a00, #ffb800);
             transition: width 0.4s ease;
         }
 
-        .skeleton-wrapper { display: none; flex-direction: column; gap: 20px; padding: 20px 0; }
-        .skeleton-item {
-            height: 20px; background: #e2e8f0; border-radius: 4px;
-            position: relative; overflow: hidden;
+        .skeleton-wrapper {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 0;
         }
+
+        .skeleton-item {
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
         .skeleton-title { width: 40%; height: 25px; margin-bottom: 10px; }
         .skeleton-text { width: 90%; }
         .skeleton-btn { width: 100%; height: 50px; border-radius: 12px; }
 
         .shimmer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
             animation: skeleton-shimmer 1.5s infinite;
         }
@@ -101,29 +128,53 @@
         }
 
         #pdfInput {
-            width: 100%; padding: 50px 20px; border: 2px dashed #cbd5e1;
-            border-radius: 12px; text-align: center; cursor: pointer; box-sizing: border-box;
+            width: 100%;
+            padding: 50px 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            cursor: pointer;
             background: rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
         }
-        #pdfInput:hover { border-color: var(--primary); background: rgba(255, 255, 255, 0.6); }
 
         .btn {
-            padding: 16px 36px; font-weight: 700; border-radius: 12px;
-            border: none; cursor: pointer; transition: all 0.3s ease;
+            padding: 16px 36px;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
         }
 
-        .btn-primary { 
-            background: #1e293b; 
-            color: white; 
-            box-shadow: 0 10px 15px -3px rgba(30, 41, 59, 0.2);
+        .btn-primary {
+            background: #1e293b;
+            color: white;
         }
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); background: #0f172a; }
-        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        #resultsSection { border-left: 6px solid #10b981; background: #f0fdf4; }
-        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .btn-download { text-decoration: none; text-align: center; color: white; border-radius: 12px; padding: 15px; font-weight: 600; }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        #resultsSection {
+            border-left: 6px solid #10b981;
+            background: #f0fdf4;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-download {
+            text-decoration: none;
+            text-align: center;
+            color: white;
+            border-radius: 12px;
+            padding: 15px;
+            font-weight: 600;
+            background: #ef4444;
+        }
     </style>
 </head>
 
@@ -141,6 +192,14 @@
     <div class="section">
         <div style="font-weight:700; margin-bottom:15px;">📄 UPLOAD LOAN DOCUMENT</div>
         <input type="file" id="pdfInput" accept="application/pdf">
+
+        <div style="margin-top:12px; font-size:13px; color:var(--text-sub); display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="loanConfirmCheckbox">
+            <label for="loanConfirmCheckbox">
+                I confirm this document is a <strong>Loan Application</strong>
+            </label>
+        </div>
+
         <div id="uploadProgress" class="progress-container" style="display:none;">
             <div class="progress-track">
                 <div id="progressBar" class="progress-fill"></div>
@@ -151,7 +210,9 @@
 
     <div class="section">
         <div style="font-weight:700; margin-bottom:15px;">⚙️ ADDITIONAL INSTRUCTIONS (OPTIONAL)</div>
-        <textarea id="extraPrompt" style="width:100%; padding:15px; border-radius:10px; border:1px solid #cbd5e1; min-height:80px; font-family: inherit;" placeholder="You can provide more information about schemes, products etc...."></textarea>
+        <textarea id="extraPrompt"
+                  style="width:100%; padding:15px; border-radius:10px; border:1px solid #cbd5e1; min-height:80px; font-family: inherit;"
+                  placeholder="You can provide more information about schemes, products etc...."></textarea>
     </div>
 
     <div class="actions">
@@ -159,7 +220,7 @@
 
         <div id="auditProgressContainer" class="progress-container" style="display:none; margin-bottom: 30px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span id="auditStatusText" style="font-size: 13px; font-weight: 700; color: var(--text-main);">INITIALIZING ENGINE...</span>
+                <span id="auditStatusText" style="font-size: 13px; font-weight: 700;">INITIALIZING ENGINE...</span>
                 <span id="auditPercentText" style="font-size: 13px; font-weight: 800; color: var(--primary);">0%</span>
             </div>
             <div class="progress-track" style="height: 16px;">
@@ -172,24 +233,58 @@
         <div class="skeleton-item skeleton-title"><div class="shimmer"></div></div>
         <div class="skeleton-item skeleton-text"><div class="shimmer"></div></div>
         <div class="skeleton-item skeleton-text" style="width:70%;"><div class="shimmer"></div></div>
-        <div class="results-grid">
-            <div class="skeleton-item skeleton-btn"><div class="shimmer"></div></div>
-            <div class="skeleton-item skeleton-btn"><div class="shimmer"></div></div>
-        </div>
+        <div class="skeleton-item skeleton-btn"><div class="shimmer"></div></div>
     </div>
 
     <div id="resultsSection" class="section" style="display:none;">
-        <div style="color: #059669; font-weight:700; margin-bottom:10px;">✅ AUDIT COMPLETE</div>
-        <p style="color: var(--text-sub); font-size:14px;">Regulatory checks processed. Download reports below.</p>
+        <div style="color:#059669; font-weight:700; margin-bottom:10px;">✅ AUDIT COMPLETE</div>
+        <p style="color: var(--text-sub); font-size:14px;">Regulatory checks processed. Download report below.</p>
         <div class="results-grid">
-            <a id="downloadPdfBtn" class="btn-download" style="background:#ef4444;">Download PDF</a>
-            <a id="downloadExcelBtn" class="btn-download" style="background:#10b981;">Download Excel</a>
+            <a id="downloadPdfBtn" class="btn-download">Download PDF</a>
         </div>
+    </div>
+</div>
+
+<!-- AI WORKING MODAL -->
+<div id="aiWorkingModal"
+     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4);
+            z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:white; padding:30px 36px; border-radius:16px;
+                max-width:420px; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.15);">
+        <div style="font-size:22px; margin-bottom:12px;">🤖</div>
+        <div style="font-size:16px; font-weight:700; margin-bottom:8px;">Please hold tight</div>
+        <div style="font-size:14px; color:#64748b; line-height:1.5;">
+            Your AI assistant is working on the document.<br>
+            You can safely come back after <strong>~10 minutes</strong>.
+        </div>
+        <button id="closeAiModal"
+                style="margin-top:20px; padding:10px 24px; border:none; border-radius:10px;
+                       background:#1e293b; color:white; font-weight:600; cursor:pointer;">
+            Got it
+        </button>
     </div>
 </div>
 
 <script>
     let runId = null;
+
+    const runAuditBtn = document.getElementById("runAuditBtn");
+    const loanCheckbox = document.getElementById("loanConfirmCheckbox");
+
+    function updateRunButtonState() {
+        runAuditBtn.disabled = !loanCheckbox.checked;
+    }
+
+    loanCheckbox.addEventListener("change", updateRunButtonState);
+
+    const aiModal = document.getElementById("aiWorkingModal");
+    document.getElementById("closeAiModal").addEventListener("click", () => {
+        aiModal.style.display = "none";
+    });
+
+    function showAiModal() {
+        aiModal.style.display = "flex";
+    }
 
     function triggerDownload(url) {
         const a = document.createElement("a");
@@ -205,14 +300,10 @@
         triggerDownload(this.href);
     });
 
-    document.getElementById("downloadExcelBtn").addEventListener("click", function (e) {
-        e.preventDefault();
-        triggerDownload(this.href);
-    });
-
     document.getElementById("pdfInput").addEventListener("change", function () {
         const file = this.files[0];
         if (!file) return;
+
         document.getElementById("uploadProgress").style.display = "block";
 
         const formData = new FormData();
@@ -221,19 +312,10 @@
 
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/upload", true);
-        xhr.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-                const percent = Math.round((e.loaded / e.total) * 100);
-                document.getElementById("progressBar").style.width = percent + "%";
-                document.getElementById("progressText").innerText = "UPLOADING: " + percent + "%";
-            }
-        };
         xhr.onload = () => {
-            if (xhr.status === 200) {
-                runId = JSON.parse(xhr.responseText).run_id;
-                document.getElementById("progressText").innerText = "✓ READY";
-                document.getElementById("runAuditBtn").disabled = false;
-            }
+            runId = JSON.parse(xhr.responseText).run_id;
+            document.getElementById("progressText").innerText = "✓ READY";
+            updateRunButtonState();
         };
         xhr.send(formData);
     });
@@ -241,13 +323,14 @@
     document.getElementById("runAuditBtn").addEventListener("click", function () {
         if (!runId) return;
 
-        const btn = this;
+        showAiModal();
+
         const auditProgress = document.getElementById("auditProgressContainer");
         const auditBar = document.getElementById("auditProgressBar");
         const statusText = document.getElementById("auditStatusText");
         const percentText = document.getElementById("auditPercentText");
 
-        btn.style.display = "none";
+        this.style.display = "none";
         auditProgress.style.display = "block";
         document.getElementById("skeletonLoader").style.display = "flex";
         document.getElementById("resultsSection").style.display = "none";
@@ -262,12 +345,11 @@
         const timer = setInterval(() => {
             if (progress < 92) {
                 progress += (progress < 40) ? 1 : 0.5;
-                const displayProgress = Math.floor(progress);
-                auditBar.style.width = displayProgress + "%";
-                percentText.innerText = displayProgress + "%";
-
-                const currentStage = stages.find(s => displayProgress <= s.upTo);
-                if (currentStage) statusText.innerText = currentStage.text;
+                const p = Math.floor(progress);
+                auditBar.style.width = p + "%";
+                percentText.innerText = p + "%";
+                const stage = stages.find(s => p <= s.upTo);
+                if (stage) statusText.innerText = stage.text;
             }
         }, 150);
 
@@ -282,18 +364,13 @@
                 setTimeout(() => {
                     document.getElementById("skeletonLoader").style.display = "none";
                     document.getElementById("downloadPdfBtn").href = `/download/pdf/${runId}`;
-                    document.getElementById("downloadExcelBtn").href = `/download/excel/${runId}`;
                     document.getElementById("resultsSection").style.display = "block";
-                    document.getElementById("resultsSection").scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById("resultsSection").scrollIntoView({ behavior: "smooth" });
                     auditProgress.style.display = "none";
                 }, 600);
             })
             .catch(() => {
-                clearInterval(timer);
                 alert("Error during audit execution. Please try again.");
-                btn.style.display = "block";
-                auditProgress.style.display = "none";
-                document.getElementById("skeletonLoader").style.display = "none";
             });
     });
 </script>
